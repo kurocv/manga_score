@@ -5,15 +5,17 @@ import re
 from rect_repository import RectRepository
 
 class RectSplitParser:
-    def __init__(self, repo: RectRepository):
+    def __init__(self, repo: RectRepository, reverse_v=False, reverse_h=False):
         self.repo = repo
+        self.reverse_v = reverse_v
+        self.reverse_h = reverse_h
 
     def parse_from_str(self, text: str, gap_v=5, gap_h=20):
         for line in text.splitlines():
             if not line.strip(): continue
             level = (len(line) - len(line.lstrip())) // 4
             content = line.strip()
-            target = self.repo.get_target_at_level(level)
+            target = self.repo.get_target_at_level(level, self.reverse_v, self.reverse_h)
             if content.startswith('#'):
                 match = re.match(r'#([vh])(\d+)', content)
                 if match:

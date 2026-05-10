@@ -20,6 +20,7 @@ venv/
 *.swp
 # others
 _bk
+export
 *.exe
 *.dll
 *.apk
@@ -27,8 +28,4 @@ _bk
 *.lib
 *.ocx
 *.lnk
-*.bmp
-*.jpg
-*.png
-*.gif
 

@@ -18,7 +18,7 @@ class RectRepository:
         while len(self.stack) > level:
             self.stack.pop()
 
-    def get_target_at_level(self, level: int, reverse=False) -> Rect:
+    def get_target_at_level(self, level: int, reverse_v=False, reverse_h=False) -> Rect:
         self.set_level(level)
         if level == 0:
             new_root = Rect(
@@ -32,14 +32,14 @@ class RectRepository:
         
         parent = self.stack[-1]
         if parent.orientation == 'v':
-            if not reverse:
+            if not reverse_v:
                 if parent.right and parent.right.is_blank: return parent.right
                 return parent.left
             else:
                 if parent.left and parent.left.is_blank: return parent.left
                 return parent.right
         else:
-            if not reverse:
+            if not reverse_h:
                 if parent.top and parent.top.is_blank: return parent.top
                 return parent.bottom
             else:

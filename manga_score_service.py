@@ -7,12 +7,13 @@ from rect_repository import RectRepository
 from PIL import Image, ImageDraw
 
 class MangaScoreService:
-    def __init__(self, width, height, line_width=1):
+    def __init__(self, width, height, line_width=1, flip_horizontal=False):
         self.width = width
         self.height = height
         self.line_width = line_width
         self.repo = RectRepository(width, height, line_width=line_width)
         self.current_index = 0
+        self.flip_horizontal = flip_horizontal
 
         # --- Undo用 ---
         self.history = []
@@ -50,6 +51,8 @@ class MangaScoreService:
             else:
                 if node.top: self._collect_gaps_recursive(node.top, gaps)
                 if node.bottom: self._collect_gaps_recursive(node.bottom, gaps)
+    def toggle_flip_horizontal(self):
+        self.flip_horizontal = not self.flip_horizontal 
 
     def get_full_text(self):
         full_text = ""
@@ -58,7 +61,7 @@ class MangaScoreService:
         return full_text.strip()
     def perform_parse(self, text):
         self.repo = RectRepository(self.width, self.height, line_width=self.line_width)
-        parser = RectSplitParser(self.repo)
+        parser = RectSplitParser(self.repo, reverse_v=self.flip_horizontal)
         parser.parse_from_str(text)
         
         if self.current_index >= len(self.repo.roots):

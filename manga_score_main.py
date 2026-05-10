@@ -17,17 +17,18 @@ class MainView:
 
         menubar = tk.Menu(self.root)
         file_menu = tk.Menu(menubar, tearoff=0) # tearoff=0 で切り離し線を無効化
-        file_menu.add_command(label="新規", command=self.dummy)
-        file_menu.add_command(label="開く", command=self.dummy)
-        file_menu.add_command(label="名前を付けて保存", command=self.dummy)
-        file_menu.add_command(label="エクスポートpng", command=self.service.export_images)
+        file_menu.add_command(label="New", command=self.dummy)
+        file_menu.add_command(label="Open...", command=self.dummy)
+        file_menu.add_command(label="Save As...", command=self.dummy)
+        file_menu.add_command(label="Export PNG", command=self.service.export_images)
         file_menu.add_separator()
-        file_menu.add_command(label="終了", command=self.dummy)
-        menubar.add_cascade(label="ファイル", menu=file_menu)
+        file_menu.add_command(label="Exit", command=self.dummy)
+        menubar.add_cascade(label="File", menu=file_menu)
         edit_menu = tk.Menu(menubar, tearoff=0) # tearoff=0 で切り離し線を無効化
-        edit_menu.add_command(label="貼り付け", command=self.dummy)
-        edit_menu.add_command(label="削除", command=self.dummy)
-        menubar.add_cascade(label="編集", menu=edit_menu)
+        edit_menu.add_command(label="Flip horizontal", command=self.flip_horizontal)
+        edit_menu.add_command(label="Paste", command=self.dummy)
+        edit_menu.add_command(label="Delete", command=self.dummy)
+        menubar.add_cascade(label="Edit", menu=edit_menu)
 
         self.root.config(menu=menubar)
 
@@ -74,6 +75,10 @@ class MainView:
 
     def dummy(self):
         pass
+
+    def flip_horizontal(self):
+        self.service.toggle_flip_horizontal()
+        self.perform_parse()
 
     def entry_select_all(self, event):
         event.widget.selection_range(0, tk.END)

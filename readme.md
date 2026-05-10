@@ -1,67 +1,70 @@
 # Manga Score
 
-## 🎹 スコア・フォーマットの基本
-このエディタでは、テキストの「インデント」と「記号」でページの階層構造を記述します。
-1. 分割のルール  
-行頭に # を付けると分割命令になります。  
-#h[比率] : 横分割 (Horizontal)。上下に分けます。  
-#v[比率] : 縦分割 (Vertical)。左右に分けます。
-[比率] : 0〜100の数値。例えば #v50 なら「中央で半分に分ける」という意味です。  
-2. インデントによる階層化  
-インデント（半角スペース4つ）を下げることで、「分割した中をさらに分割」できます。  
+![Manga Score Editor Demo](info.gif)
+
+## 🎹 Basic Score Format
+This editor describes the hierarchical structure of a manga page using "indents" and "commands."
+1. Split Rules
+Lines starting with # are split commands.
+- #h[ratio]: Horizontal split. Divides the area into top and bottom.
+- #v[ratio]: Vertical split. Divides the area into left and right.
+- [ratio]: A value from 0 to 100. For example, #v50 means "split exactly in half, left and right."
+
+2. Hierarchical Structure via Indentation
+Use indentation (4 spaces) to "split a split area" further. 
 ```
-#h60          <-- ページを上下に 60:40 で分割（親）  
-    #v50      <-- 上の60%の中を、さらに左右 50:50 で分割（子）  
-        aaa   <-- 右側のコマ  
-        bbb   <-- 左側のコマ  
-    ccc       <-- 下の40%のコマ  
+#h60          <-- Parent: Splits the page 60:40 (top and bottom)
+    #v50      <-- Child: Splits the top 60% area into 50:50 (left and right)
+        aaa   <-- Panel: Top-Left
+        bbb   <-- Panel: Top-Right
+    ccc       <-- Panel: Bottom 40% area
 ```
-3. ラベル（セリフ・メモ）  
-#で始まらない行は、その領域に表示する「ラベル」として扱われます。コマの中のセリフ案や、演出メモ（「回想」「大写し」など）を自由に書き込めます。
-## 💡 スコアの記述例（1ページ分）
-実際のマンガの1ページを想定したスコアの例です。  
+3. Labels (Dialogue & Notes)
+Any line that does not start with # is treated as a Label. You can freely write dialogue drafts or directorial notes (e.g., "Flashback," "Close-up") to be displayed inside the panel.
+
+## 💡 Score Example (One Full Page)
+Here is an example of a score representing a single manga page layout.
 ```
 #h20
-    タイトルロゴ
+    Title Logo
 #h60
     #v70
         #h50
-            1. 驚く主人公
-            2. 迫る敵の足元
-        3. 爆発エフェクト（大コマ）
-    4. 状況説明のモノローグ
+            1. Protagonist looking surprised
+            2. Enemy's feet approaching
+        3. Explosion effect (Large panel)
+    4. Exposition monologue
 #h20
     #v50
-        5. 次回へ続く！
-        6. 煽り文
+        5. To be continued!
+        6. Editor's teaser text
 ```
 
 # Manga Score Editor 🖋️
 
-**"思考の速度でコマを割る。テキスト駆動型・超軽量ネームエディタ"**
+"Layout at the speed of thought. A text-driven, lightweight storyboard editor."
 
-`Manga Score Editor` は、マンガの演出・構成（ネーム）に特化したレイアウト設計ツールです。
-複雑な操作を排除し、テキストによる構造定義と直感的なマウス操作を融合させました。
+Manga Score Editor is a specialized layout design tool for manga storyboarding (Name).It eliminates complex operations by merging text-based structural definition with intuitive mouse controls.
 
-## 🚀 introduction
+## 🚀 Key Features
 
-- **スコアリング・レイアウト**: インデント構造のテキスト（スコア）でコマ割りを生成。
-- **再帰的リサイズ**: 境界線をドラッグし、孫要素までの比率を維持したままリアルタイムに連動リサイズ。
-- **デジタルネイティブ設計**: 「上下の段間は広く、左右のコマ間は狭く」というマンガのセオリーを標準実装。
-- **圧倒的軽量レスポンス**: 標準ライブラリ(Tkinter)ベースのため、どんなに割っても「パカパカ」と軽快に動作。
-- **透過PNG一括出力**: 全ページをワンクリックで書き出し、CLIP STUDIO等へ即座に連携可能。
+- Scoring Layout: Generate panel layouts instantly from indented text structures (Scores).
+- Recursive Resizing: Drag boundaries to resize panels in real-time. Sub-panels maintain their proportions automatically.
+- Digital-Native Design: Built-in manga logic—automatically implements standard spacing (wide vertical gutters, narrow horizontal gutters).
+- Lightweight Response: Based on the standard library (Tkinter). Even with complex layouts, it remains incredibly snappy.
+- Bulk Transparent PNG Export: Export all pages with a single click for immediate integration with software like CLIP STUDIO PAINT.
 
 ## 🖱️ 基本操作
 
-- **左クリック**: コマを横に分割（Horizontal Split）
-- **右クリック**: コマを縦に分割（Vertical Split）
-- **中クリック**: ラベル（セリフ・メモ）の編集
-- **境界線ドラッグ**: 分割比率の調整（子要素も自動追従）
-- **境界線ダブルクリック**: 分割の解除
-- **Ctrl+Shift+a / Ctrl+Shift+d キー**: ページの切り替え
-- **Ctrl + z / y**: 履歴のやり直し・復元
+- Left Click: Split panel horizontally.
+- Right Click: Split panel vertically.
+- Middle Click: Edit label (Dialogue/Notes).
+- Drag Boundary: Adjust split ratio (Child elements follow automatically).
+- Double Click Boundary: Remove split.
+- Ctrl+Shift+A / D: Switch pages.
+- Ctrl+Z / Y: Undo / Redo.
 
-## 🛠️ 開発環境
+## 🛠️ Requirements
 - Python 3.x
 - Pillow (Image Export)
 
