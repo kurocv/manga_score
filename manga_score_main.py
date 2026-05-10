@@ -1,4 +1,5 @@
 # coding: UTF-8
+# -*- coding: utf-8 -*-
 
 import tkinter as tk
 from manga_score_service import MangaScoreService
